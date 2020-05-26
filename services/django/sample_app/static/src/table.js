@@ -14,8 +14,7 @@ template.innerHTML = `
         <vaadin-grid-column path="name" header="Full Name"></vaadin-grid-column>
         <vaadin-grid-column path="status" header="Status"></vaadin-grid-column>
         <vaadin-grid-column path="origin.name" header="Origin"></vaadin-grid-column>
-        <vaadin-grid-column path="location.name" header="Current Location"</vaadin-grid-column>
-        <vaadin-grid-column path="visitCount" text-align="end" width="120px" flex-grow="0"></vaadin-grid-column>
+        <vaadin-grid-column path="location.name" header="Current Location"></vaadin-grid-column>
     </vaadin-grid>
 </div>
 `;
