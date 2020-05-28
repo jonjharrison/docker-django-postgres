@@ -5,10 +5,55 @@
     <head></head>
     <body>
         Hello, World. You are currently at the users table.
-        <sample-table></sample-table>
-        <lit-table></lit-table>
+        <!-- Option 1: Vanilla Web Components -->
+        <!-- <sample-table></sample-table> -->
+
+        <!-- Option 2: Lit-Element -->
+        <!-- <lit-table></lit-table> -->
+
+        <!-- Option 3: Header Columns Pulled into HTML File -->
+        <!-- <lit-table-lifted>
+            <vaadin-grid-column path="name" header="Full Name"></vaadin-grid-column>
+            <vaadin-grid-column path="status" header="Status"></vaadin-grid-column>
+            <vaadin-grid-column path="origin.name" header="Origin"></vaadin-grid-column>
+            <vaadin-grid-column path="location.name" header="Current Location"></vaadin-grid-column>
+        </lit-table-lifted> -->
+
+        <!-- Option 4: Dynamically Generating Columns -->
+        <lit-table-gen-cols
+            url="https://rickandmortyapi.com/api/character/"
+        ></lit-table-gen-cols>
+        <script type="text/javascript">
+            (async () => {
+                let table = document.querySelector('lit-table-gen-cols');
+                
+                let response = await fetch(table.getAttribute('url'));
+                let data = await response.json();
+                console.log(data.results);
+                data = JSON.stringify(data.results);
+
+                const keys = {
+                    "name": "Full Name",
+                    "status": "Status",
+                    "origin.name": "Origin",
+                    "location.name": "Curent Location"
+                };
+                
+                table.data = data;
+    
+                for (let key in keys) {
+                    let column = document.createElement('vaadin-grid-column');
+    
+                    column.setAttribute('path', key);
+                    column.setAttribute('header', keys[key]);
+                    table.append(column);
+                }
+            })();
+        </script>
 
         <script type="module" src="{% static 'src/table.js' %}"></script>
         <script type="module" src="{% static 'src/lit_table.js' %}"></script>
+        <script type="module" src="{% static 'src/lit_table_lifted.js' %}"></script>
+        <script type="module" src="{% static 'src/lit_table_gen_cols.js' %}"></script>
     </body>
 </html>
